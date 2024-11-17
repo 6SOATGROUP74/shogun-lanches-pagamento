@@ -30,6 +30,7 @@ public interface PagamentoMapper {
     @Mapping(target = "tipoDoPagamento", source = "tipoDoPagamento")
     @Mapping(target = "dataPagamento", source = "dataPagamento")
     @Mapping(target = "codPagamento", source = "codPagamento")
+    @Mapping(target = "idPagamento", source = "idPagamento")
     @Mapping(target = "copiaCola", source = "copiaCola")
     @Mapping(target = "qrCodeLink", source = "qrCodeLink")
     PagamentoResponse mapFrom(Pagamento pagamento);
