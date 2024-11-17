@@ -21,7 +21,7 @@ public interface PagamentoEntityMapper {
     @Mapping(target = "copiaCola", source = "pagamentoEntity.copiaCola")
     @Mapping(target = "qrCodeLink", source = "pagamentoEntity.qrCodeLink")
     @Mapping(target = "dataPagamento", source = "dataPagamento")
-    @Mapping(target = "idPagamento", source = "idPagamento")
+    @Mapping(target = "idPagamento", source = "pagamentoEntity.idPagamento")
     Pagamento mapFrom(PagamentoEntity pagamentoEntity);
 
     default String dataHoraAtual() {
