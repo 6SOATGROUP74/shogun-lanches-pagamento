@@ -51,7 +51,7 @@ public class PagamentoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(PagamentoMapper.INSTANCE.mapFrom(pagamento));
     }
 
-    @GetMapping("/{codPagamento}")
+    @GetMapping("/{pagamentoId}")
     public ResponseEntity<?> consultaStatusPagamento(@PathVariable Long pagamentoId) {
 
         logger.info("m=consultaStatusPagamento, status=init,  msg=Consulta status de pagamento, pagamentoId={}", pagamentoId);
