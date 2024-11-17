@@ -1,0 +1,48 @@
+version: '3.9'
+
+services:
+#  tech-challenge:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    image: igoryy/fiap-6soat:latest
+#    container_name: springboot-lanchonete
+#    restart: on-failure
+#    environment:
+#      - DB_HOST
+#      - DB_PORT
+#      - DB_USER
+#      - DB_PASSWORD
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      mysql:
+#        condition: service_healthy
+#    networks:
+#      - tech-challenge-network
+
+  mysql:
+    image: mysql:8.0.37-debian
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: user_main
+      MYSQL_DATABASE: db_soat
+      MYSQL_USER: user_main
+      MYSQL_PASSWORD: user_main
+    volumes:
+      - mysql-volume:/var/lib/mysql
+#    healthcheck:
+#      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+#      timeout: 1s
+#      retries: 10
+    networks:
+      - tech-challenge-network
+networks:
+  tech-challenge-network:
+    driver: bridge
+
+volumes:
+  mysql-volume:
+    driver: local
