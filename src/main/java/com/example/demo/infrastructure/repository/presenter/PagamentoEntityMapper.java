@@ -22,6 +22,7 @@ public interface PagamentoEntityMapper {
     @Mapping(target = "qrCodeLink", source = "pagamentoEntity.qrCodeLink")
     @Mapping(target = "dataPagamento", source = "dataPagamento")
     @Mapping(target = "idPagamento", source = "pagamentoEntity.idPagamento")
+    @Mapping(target = "statusDoPagamento", source = "pagamentoEntity.status")
     Pagamento mapFrom(PagamentoEntity pagamentoEntity);
 
     default String dataHoraAtual() {
@@ -35,6 +36,7 @@ public interface PagamentoEntityMapper {
         target.setCopiaCola(pagamento.getCopiaCola());
         target.setQrCodeLink(pagamento.getQrCodeLink());
         target.setIdPagamento(pagamento.getIdPagamento());
+        target.setStatus(pagamento.getstatusDoPagamento());
         return target;
     }
 }

@@ -48,7 +48,7 @@ public class PagamentoController {
 
         logger.info("m=realizarPagamento, status=success,  msg=Processo de pagamento realizado com sucesso, pagamentoRequest={}", pagamentoRequest);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(PagamentoMapper.INSTANCE.mapFrom(pagamento));
+        return ResponseEntity.status(HttpStatus.CREATED).body(PagamentoResponseMapper.INSTANCE.mapFrom(pagamento));
     }
 
     @GetMapping("/{pagamentoId}")
@@ -64,17 +64,17 @@ public class PagamentoController {
     }
 
     @PostMapping("/confirma-pagamento/{pagamentoId}")
-    public ResponseEntity<?> confirmaPagamen(@PathVariable Long pagamentoId) {
+    public ResponseEntity<?> confirmaPagamento(@PathVariable Long pagamentoId) {
 
-        logger.info("m=recebeConfirmacaoDePagamentoWebhook, msg=Recebendo confirmação de status de pagamento do Pagbank, pagamentoId={}", pagamentoId);
+        logger.info("m=confirmaPagamento, msg=Recebendo confirmação de status de pagamento do Pagbank, pagamentoId={}", pagamentoId);
 
         Pagamento pagamentoAtual = buscarPagamentoAdapterPort.buscar(pagamentoId);
 
         var pagamento =  validarPagamentoPedidoUseCasePort.execute(pagamentoAtual);
 
-        logger.info("m=recebeConfirmacaoDePagamentoWebhook, msg=Confirmação de pagamento recebido do Pagbank com sucesso, pagamentoId={}", pagamentoId);
+        logger.info("m=confirmaPagamento, msg=Confirmação de pagamento recebido do Pagbank com sucesso, pagamentoId={}", pagamentoId);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(PagamentoMapper.INSTANCE.mapConvertFrom(pagamento));
+        return ResponseEntity.status(HttpStatus.CREATED).body(PagamentoResponseMapper.INSTANCE.mapFrom(pagamento));
     }
 
     @PostMapping("/webhook")
@@ -86,6 +86,6 @@ public class PagamentoController {
 
         logger.info("m=recebeConfirmacaoDePagamentoWebhook, msg=Confirmação de pagamento recebido do Pagbank com sucesso, pagamentoId={}", pagamentoId);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(PagamentoMapper.INSTANCE.mapConvertFrom(pagamento));
+        return ResponseEntity.status(HttpStatus.CREATED).body(PagamentoResponseMapper.INSTANCE.mapFrom(pagamento));
     }
 }

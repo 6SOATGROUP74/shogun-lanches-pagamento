@@ -32,7 +32,7 @@ public class AlterarStatusPagamentoUseCase implements AlterarStatusPagamentoUseC
         }
 
         final Pagamento pagamentoProcessado = processaStatusPagamentoPagbankAdapter.execute(pagamentoAtual);
-        pagamentoProcessado.setStatus(APROVADO.name());
+        pagamentoProcessado.setstatusDoPagamento(APROVADO.name());
 
         salvarPagamentoAdapterPort.salvar(pagamentoProcessado);
 

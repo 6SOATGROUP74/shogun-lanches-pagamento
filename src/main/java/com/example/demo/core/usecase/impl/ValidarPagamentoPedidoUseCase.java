@@ -31,7 +31,7 @@ public class ValidarPagamentoPedidoUseCase implements ValidarPagamentoPedidoUseC
             throw new PagamentoNotFoundException("Pagamento nao localizado.");
         }
 
-        pagamentoAtualizado.setStatus(StatusPagamento.APROVADO.name());
+        pagamentoAtualizado.setstatusDoPagamento(StatusPagamento.APROVADO.name());
         pagamentoAtualizado.setDataPagamento(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
         final var dadosPagamento = salvarPagamentoAdapterPort.salvar(pagamentoAtualizado);

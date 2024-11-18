@@ -6,7 +6,7 @@ public class Pagamento {
 
     private Long idPagamento;
     private Long numeroPedido;
-    private String status;
+    private String statusDoPagamento;
     private BigDecimal valorTotal;
     private String tipoDoPagamento;
     private String dataPagamento;
@@ -46,12 +46,12 @@ public class Pagamento {
         this.codPagamento = codPagamento;
     }
 
-    public String getStatus() {
-        return status;
+    public String getstatusDoPagamento() {
+        return statusDoPagamento;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setstatusDoPagamento(String statusDoPagamento) {
+        this.statusDoPagamento = statusDoPagamento;
     }
 
     public Long getIdPagamento() {
@@ -92,7 +92,7 @@ public class Pagamento {
         return "Pagamento{" +
                 "idPagamento=" + idPagamento +
                 ", numeroPedido=" + numeroPedido +
-                ", status='" + status + '\'' +
+                ", statusDoPagamento='" + statusDoPagamento + '\'' +
                 ", valorTotal=" + valorTotal +
                 ", tipoDoPagamento='" + tipoDoPagamento + '\'' +
                 ", dataPagamento='" + dataPagamento + '\'' +
