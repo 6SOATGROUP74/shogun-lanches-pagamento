@@ -26,6 +26,7 @@ public class TesteController {
 
         sqsTemplate.send(to -> to.queue("producao").payload(producaoRequest));
 
+
         return ResponseEntity.status(HttpStatus.CREATED).body("Evento criado com sucesso!");
     }
 }

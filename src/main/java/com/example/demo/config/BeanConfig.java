@@ -2,6 +2,7 @@ package com.example.demo.config;
 
 import com.example.demo.adapter.gateway.interfaces.pagamento.BuscarPagamentoAdapterPort;
 import com.example.demo.adapter.gateway.interfaces.pagamento.SalvarPagamentoAdapterPort;
+import com.example.demo.adapter.gateway.interfaces.producao.EnviaPedidoParaProducaoAdapterPort;
 import com.example.demo.core.usecase.impl.AlterarStatusPagamentoUseCase;
 import com.example.demo.core.usecase.impl.PagarPedidoUseCase;
 import com.example.demo.core.usecase.impl.ValidarPagamentoPedidoUseCase;
@@ -15,7 +16,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class BeanConfig {
-
 
     @Bean
     public PagarPedidoUseCasePort pagarPedidoUseCasePort(PagarPedidoPagbankAdapter pagarPedidoPagbankAdapter,
@@ -32,5 +32,4 @@ public class BeanConfig {
     public ValidarPagamentoPedidoUseCasePort validarPagamentoPedidoUseCasePort(SalvarPagamentoAdapterPort salvarPagamentoAdapterPort, BuscarPagamentoAdapterPort buscarPagamentoAdapterPort) {
         return new ValidarPagamentoPedidoUseCase(buscarPagamentoAdapterPort, salvarPagamentoAdapterPort);
     }
-
 }
