@@ -39,6 +39,7 @@ services:
 #      retries: 10
     networks:
       - tech-challenge-network
+
 networks:
   tech-challenge-network:
     driver: bridge

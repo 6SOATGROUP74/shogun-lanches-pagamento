@@ -16,7 +16,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BeanConfig {
 
-
     @Bean
     public PagarPedidoUseCasePort pagarPedidoUseCasePort(PagarPedidoPagbankAdapter pagarPedidoPagbankAdapter,
                                                          SalvarPagamentoAdapterPort salvarPagamentoAdapterPort) {
@@ -32,5 +31,4 @@ public class BeanConfig {
     public ValidarPagamentoPedidoUseCasePort validarPagamentoPedidoUseCasePort(SalvarPagamentoAdapterPort salvarPagamentoAdapterPort, BuscarPagamentoAdapterPort buscarPagamentoAdapterPort) {
         return new ValidarPagamentoPedidoUseCase(buscarPagamentoAdapterPort, salvarPagamentoAdapterPort);
     }
-
 }

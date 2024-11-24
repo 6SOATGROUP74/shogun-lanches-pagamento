@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @ToString
@@ -19,7 +21,7 @@ public class PagamentoRequest {
     private Long numeroPedido;
 
     @JsonProperty("valor_total")
-    private Long valorTotal;
+    private BigDecimal valorTotal;
 
     @NotEmpty(message = "O campo não pode ser vazio.")
     @NotNull(message = "O campo obrigatório")

@@ -37,7 +37,7 @@ public class PagarPedidoPagbankAdapter implements PagarPedidoAdapterPort {
         pagamento.setDataPagamento(response.getBody().getDataPagamento());
         pagamento.setCodPagamento(response.getBody().getCodigoDoPagamento());
         pagamento.setTipoDoPagamento(QR_CODE_PAGBANK.name());
-        pagamento.setStatus(PENDENTE.name());
+        pagamento.setstatusDoPagamento(PENDENTE.name());
         pagamento.setCopiaCola(response.getBody().getQrCodes().get(0).getCopiaCola());
         pagamento.setQrCodeLink(response.getBody().getQrCodes().get(0).getLinks().get(0).getLinkDoQRCode());
         logger.info("m=pagar, status=success, msg=Geração de QR no PagBank realizada com sucesso, pagamento={}", pagamento);

@@ -33,7 +33,7 @@ public class PagarPedidoUseCase implements PagarPedidoUseCasePort {
 
         logger.info("m=checkout, status=succes,  msg=Checkout realizado com sucesso, pagamento={}, pedido={}", dadosPagamento);
 
-        return pagamento;
+        return dadosPagamento;
     }
 
     private Logger logger = LoggerFactory.getLogger(PagarPedidoUseCase.class);
