@@ -1,10 +1,8 @@
 package com.example.demo.adapter.controller;
 
-import com.example.demo.adapter.controller.request.common.ProducaoRequest;
 import com.example.demo.adapter.controller.request.pagamento.PagamentoRequest;
 import com.example.demo.adapter.controller.request.pagamento.mapper.PagamentoMapper;
 import com.example.demo.adapter.gateway.interfaces.pagamento.BuscarPagamentoAdapterPort;
-import com.example.demo.adapter.gateway.interfaces.producao.EnviaPedidoParaProducaoAdapterPort;
 import com.example.demo.adapter.presenter.pagamento.PagamentoResponseMapper;
 import com.example.demo.core.domain.Pagamento;
 import com.example.demo.core.usecase.interfaces.pagamento.AlterarStatusPagamentoUseCasePort;
@@ -32,14 +30,12 @@ public class PagamentoController {
     private final ValidarPagamentoPedidoUseCasePort validarPagamentoPedidoUseCasePort;
     private final BuscarPagamentoAdapterPort buscarPagamentoAdapterPort;
     private final AlterarStatusPagamentoUseCasePort alterarStatusPagamentoUseCasePort;
-    private final EnviaPedidoParaProducaoAdapterPort enviaPedidoParaProducaoAdapterPort;
 
-    public PagamentoController(PagarPedidoUseCasePort pagarPedidoUseCasePort, ValidarPagamentoPedidoUseCasePort validarPagamentoPedidoUseCasePort, BuscarPagamentoAdapterPort buscarPagamentoAdapterPort, AlterarStatusPagamentoUseCasePort alterarStatusPagamentoUseCasePort, EnviaPedidoParaProducaoAdapterPort enviaPedidoParaProducaoAdapterPort){
+    public PagamentoController(PagarPedidoUseCasePort pagarPedidoUseCasePort, ValidarPagamentoPedidoUseCasePort validarPagamentoPedidoUseCasePort, BuscarPagamentoAdapterPort buscarPagamentoAdapterPort, AlterarStatusPagamentoUseCasePort alterarStatusPagamentoUseCasePort){
         this.pagarPedidoUseCasePort = pagarPedidoUseCasePort;
         this.validarPagamentoPedidoUseCasePort = validarPagamentoPedidoUseCasePort;
         this.buscarPagamentoAdapterPort = buscarPagamentoAdapterPort;
         this.alterarStatusPagamentoUseCasePort = alterarStatusPagamentoUseCasePort;
-        this.enviaPedidoParaProducaoAdapterPort = enviaPedidoParaProducaoAdapterPort;
     }
 
 
@@ -79,18 +75,6 @@ public class PagamentoController {
         logger.info("m=confirmaPagamento, msg=Confirmação de pagamento recebido do Pagbank com sucesso, pagamentoId={}", pagamentoId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(PagamentoResponseMapper.INSTANCE.mapFrom(pagamento));
-    }
-
-    @PostMapping("/envia-pedido")
-    public ResponseEntity<?> enviaPedidoParaProducao(@RequestBody ProducaoRequest producaoRequest) {
-
-        logger.info("m=enviaPedidoParaProducao, msg=Enviando pedido para cozinha, producaoRequest={}", producaoRequest);
-
-        enviaPedidoParaProducaoAdapterPort.enviaPedido(producaoRequest);
-
-        logger.info("m=enviaPedidoParaProducao, msg=Pedido enviado com sucesso para a cozinha, producaoRequest={}", producaoRequest);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body("Pedido enviado com sucesso para a cozinha");
     }
 
     @PostMapping("/webhook")
