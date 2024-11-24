@@ -94,14 +94,16 @@ public class PagamentoController {
     }
 
     @PostMapping("/webhook")
-    public ResponseEntity<?> recebeConfirmacaoDePagamentoWebhook(@PathVariable Long pagamentoId) {
+    public ResponseEntity<?> recebeConfirmacaoDePagamentoWebhook(@PathVariable PagbankWebhookRequest pagbankWebhookRequest) {
 
-        logger.info("m=recebeConfirmacaoDePagamentoWebhook, msg=Recebendo confirmação de status de pagamento do Pagbank, pagamentoId={}", pagamentoId);
+        logger.info("m=recebeConfirmacaoDePagamentoWebhook, msg=Recebendo confirmação de status de pagamento do Pagbank, pagbankWebhookRequest={}", pagbankWebhookRequest);
 
-        var pagamento =  alterarStatusPagamentoUseCasePort.execute(pagamentoId);
+        var pagamento = PagamentoMapper.INSTANCE.mapFrom(pagbankWebhookRequest);
 
-        logger.info("m=recebeConfirmacaoDePagamentoWebhook, msg=Confirmação de pagamento recebido do Pagbank com sucesso, pagamentoId={}", pagamentoId);
+        var pagamentoAlterado =  alterarStatusPagamentoUseCasePort.execute(pagamento.getIdPagamento());
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(PagamentoResponseMapper.INSTANCE.mapFrom(pagamento));
+        logger.info("m=recebeConfirmacaoDePagamentoWebhook, msg=Confirmação de pagamento recebido do Pagbank com sucesso, pagbankWebhookRequest={}", pagamentoAlterado);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(PagamentoResponseMapper.INSTANCE.mapFrom(pagamentoAlterado));
     }
 }
