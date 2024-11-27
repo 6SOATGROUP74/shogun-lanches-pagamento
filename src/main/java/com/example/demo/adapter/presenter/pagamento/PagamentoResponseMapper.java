@@ -1,6 +1,6 @@
 package com.example.demo.adapter.presenter.pagamento;
 
-import com.example.demo.adapter.controller.request.pagamento.PagamentoResponse;
+import com.example.demo.adapter.controller.response.pagamento.PagamentoResponse;
 import com.example.demo.core.domain.Pagamento;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

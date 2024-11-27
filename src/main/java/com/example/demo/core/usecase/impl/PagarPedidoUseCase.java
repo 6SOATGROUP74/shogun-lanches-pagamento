@@ -23,13 +23,9 @@ public class PagarPedidoUseCase implements PagarPedidoUseCasePort {
 
         logger.info("m=checkout, status=init,  msg=Iniciando processo de checkout, pagamento={}", pagamento);
 
-
         final Pagamento pagamentoProcessado = pagarPedidoPagbankAdapter.pagar(pagamento);
 
-
-
         final var dadosPagamento = salvarPagamentoAdapterPort.salvar(pagamentoProcessado);
-
 
         logger.info("m=checkout, status=succes,  msg=Checkout realizado com sucesso, pagamento={}, pedido={}", dadosPagamento);
 

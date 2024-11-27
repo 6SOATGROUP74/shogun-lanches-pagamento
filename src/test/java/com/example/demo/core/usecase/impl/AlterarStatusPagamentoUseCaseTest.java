@@ -1,73 +1,69 @@
-//package com.example.demo.core.usecase.impl;
-//
-//import com.example.demo.adapter.gateway.interfaces.pagamento.BuscarPagamentoAdapterPort;
-//import com.example.demo.adapter.gateway.interfaces.pagamento.SalvarPagamentoAdapterPort;
-//import com.example.demo.adapter.gateway.interfaces.pedido.BuscarPedidoAdapterPort;
-//import com.example.demo.core.domain.Pagamento;
-//import com.example.demo.core.domain.Pedido;
-//import com.example.demo.exceptions.PagamentoNotFoundException;
-//import com.example.demo.infrastructure.integration.pagbank.ProcessaStatusPagamentoPagbankAdapter;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//import org.mockito.InjectMocks;
-//import org.mockito.Mock;
-//import org.mockito.MockitoAnnotations;
-//
-//import static org.junit.jupiter.api.Assertions.*;
-//import static org.mockito.ArgumentMatchers.anyLong;
-//import static org.mockito.ArgumentMatchers.eq;
-//import static org.mockito.Mockito.*;
-//
-//class AlterarStatusPagamentoUseCaseTest {
-//
-//    @Mock
-//    private ProcessaStatusPagamentoPagbankAdapter processaStatusPagamentoPagbankAdapter;
-//
-//    @Mock
-//    private BuscarPagamentoAdapterPort buscarPagamentoAdapterPort;
-//
-//    @Mock
-//    private SalvarPagamentoAdapterPort salvarPagamentoAdapterPort;
-//
-//    @Mock
-//    private BuscarPedidoAdapterPort buscarPedidoAdapterPort;
-//
-//    @InjectMocks
-//    AlterarStatusPagamentoUseCase alterarStatusPagamentoUseCase;
-//
-//    @BeforeEach
-//    void setup(){
-//        MockitoAnnotations.openMocks(this);
-//    }
-//
-//    @Test
-//    void execute_DeveLancarExceptionPagamentoNotFound(){
-//
-//        when(buscarPagamentoAdapterPort.buscar(anyLong())).thenReturn(null);
-//
-//        assertThrows(PagamentoNotFoundException.class, ()-> alterarStatusPagamentoUseCase.execute(anyLong()));
-//
-//    }
-//
-//    @Test
-//    void execute_DeveRetornarUmPagamentoValido(){
-//
-//        Pagamento pagamento = new Pagamento();
-//        pagamento.setNumeroPedido(1L);
-//
-//        Pedido pedido = CommonsMock.buildPedido();
-//
-//        when(buscarPagamentoAdapterPort.buscar(anyLong())).thenReturn(pagamento);
-//        when(buscarPedidoAdapterPort.execute(eq(pagamento.getNumeroPedido()))).thenReturn(pedido);
-//
-//        Pagamento pagamentoProcessado = new Pagamento();
-//
-//        when(processaStatusPagamentoPagbankAdapter.execute(eq(pagamento))).thenReturn(pagamentoProcessado);
-//
-//        assertNotNull(alterarStatusPagamentoUseCase.execute(anyLong()));
-//
-//        verify(salvarPagamentoAdapterPort, times(1)).salvar(eq(pagamentoProcessado));
-//
-//    }
-//
-//}
+package com.example.demo.core.usecase.impl;
+
+import com.example.demo.adapter.gateway.interfaces.pagamento.BuscarPagamentoAdapterPort;
+import com.example.demo.adapter.gateway.interfaces.pagamento.SalvarPagamentoAdapterPort;
+import com.example.demo.core.domain.Pagamento;
+import com.example.demo.core.domain.StatusPagamento;
+import com.example.demo.exceptions.PagamentoNotFoundException;
+import com.example.demo.infrastructure.integration.pagbank.ProcessaStatusPagamentoPagbankAdapter;
+import com.example.demo.mocks.PagamentoMockBuilder;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+class AlterarStatusPagamentoUseCaseTest {
+
+    ProcessaStatusPagamentoPagbankAdapter processaStatusPagamentoPagbankAdapter = mock(ProcessaStatusPagamentoPagbankAdapter.class);
+    BuscarPagamentoAdapterPort buscarPagamentoAdapterPort = mock(BuscarPagamentoAdapterPort.class);
+    SalvarPagamentoAdapterPort salvarPagamentoAdapterPort = mock(SalvarPagamentoAdapterPort.class);
+    AlterarStatusPagamentoUseCase alterarStatusPagamentoUseCase = new AlterarStatusPagamentoUseCase(processaStatusPagamentoPagbankAdapter, buscarPagamentoAdapterPort, salvarPagamentoAdapterPort);
+
+    @Test
+    public void deveAlterarStatusPagamentoComSucesso() {
+        Long pagamentoId = 1L;
+        Pagamento pagamento = PagamentoMockBuilder.builder().idPagamento(pagamentoId).build();
+        Pagamento pagamentoProcessado = PagamentoMockBuilder.builder()
+                .idPagamento(pagamentoId)
+                .statusDoPagamento(StatusPagamento.APROVADO.name())
+                .build();
+
+        when(buscarPagamentoAdapterPort.buscar(pagamentoId)).thenReturn(pagamento);
+        when(processaStatusPagamentoPagbankAdapter.execute(pagamento)).thenReturn(pagamentoProcessado);
+        when(salvarPagamentoAdapterPort.salvar(pagamentoProcessado)).thenReturn(pagamentoProcessado);
+
+        alterarStatusPagamentoUseCase.execute(pagamentoId);
+
+        verify(buscarPagamentoAdapterPort, times(1)).buscar(anyLong());
+        verify(processaStatusPagamentoPagbankAdapter, times(1)).execute(pagamento);
+        verify(salvarPagamentoAdapterPort, times(1)).salvar(any());
+    }
+
+    @Test
+    public void deveLancarExecessaoAoNaoEncontrarPagamento() {
+        Long pagamentoId = 1L;
+        Pagamento pagamento = PagamentoMockBuilder.builder().idPagamento(pagamentoId).build();
+        Pagamento pagamentoProcessado = PagamentoMockBuilder.builder()
+                .idPagamento(pagamentoId)
+                .statusDoPagamento(StatusPagamento.APROVADO.name())
+                .build();
+
+        when(buscarPagamentoAdapterPort.buscar(pagamentoId)).thenReturn(null);
+
+        Pagamento result = null;
+        try {
+            result = alterarStatusPagamentoUseCase.execute(pagamentoId);
+            Assertions.fail();
+        } catch (PagamentoNotFoundException e) {
+            Assertions.assertNull(result);
+        }
+
+        verify(buscarPagamentoAdapterPort, times(1)).buscar(anyLong());
+        verify(processaStatusPagamentoPagbankAdapter, times(0)).execute(pagamento);
+        verify(salvarPagamentoAdapterPort, times(0)).salvar(any());
+    }
+}

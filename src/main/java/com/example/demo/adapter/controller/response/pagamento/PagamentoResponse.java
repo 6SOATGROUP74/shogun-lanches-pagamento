@@ -1,4 +1,4 @@
-package com.example.demo.adapter.controller.request.pagamento;
+package com.example.demo.adapter.controller.response.pagamento;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -4,12 +4,14 @@ import com.example.demo.infrastructure.integration.pagbank.presenter.Cliente;
 import com.example.demo.infrastructure.integration.pagbank.presenter.Produto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
 
+@Builder
 @Getter
 @Setter
 @AllArgsConstructor

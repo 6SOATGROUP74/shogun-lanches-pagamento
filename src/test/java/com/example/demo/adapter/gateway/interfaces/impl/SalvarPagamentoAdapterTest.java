@@ -3,34 +3,29 @@ package com.example.demo.adapter.gateway.interfaces.impl;
 import com.example.demo.core.domain.Pagamento;
 import com.example.demo.infrastructure.repository.PagamentoRepository;
 import com.example.demo.infrastructure.repository.entity.PagamentoEntity;
-import org.junit.jupiter.api.BeforeEach;
+import static com.example.demo.mocks.PagamentoHelper.convertePagamentoParaPagamentoEntity;
+import com.example.demo.mocks.PagamentoMockBuilder;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class SalvarPagamentoAdapterTest {
 
-    @Mock
-    private PagamentoRepository repository;
-
-    @InjectMocks
-    private SalvarPagamentoAdapter salvarPagamentoAdapter;
-
-    @BeforeEach
-    void setup(){
-        MockitoAnnotations.openMocks(this);
-    }
+    PagamentoRepository pagamentoRepository = mock(PagamentoRepository.class);
+    SalvarPagamentoAdapter salvarPagamentoAdapter = new SalvarPagamentoAdapter(pagamentoRepository);
 
     @Test
-    void salvar_NaoDeveRetornarException() {
-        when(repository.save(any(PagamentoEntity.class)))
-                .thenReturn(new PagamentoEntity());
+    public void deveSalvarPagamentoComSucesso() {
+        Pagamento pagamento = PagamentoMockBuilder.builder().build();
+        PagamentoEntity pagamentoEntity = convertePagamentoParaPagamentoEntity(pagamento);
 
-        assertDoesNotThrow(() -> salvarPagamentoAdapter.salvar(any(Pagamento.class)));
+        when(pagamentoRepository.save(pagamentoEntity)).thenReturn(pagamentoEntity);
+
+        salvarPagamentoAdapter.salvar(pagamento);
+
+        verify(pagamentoRepository, times(1)).save(any());
     }
 }

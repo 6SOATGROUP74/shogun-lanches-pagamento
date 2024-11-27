@@ -78,7 +78,7 @@ public class PagamentoController {
     }
 
     @PostMapping("/webhook")
-    public ResponseEntity<?> recebeConfirmacaoDePagamentoWebhook(@PathVariable PagbankWebhookRequest pagbankWebhookRequest) {
+    public ResponseEntity<?> recebeConfirmacaoDePagamentoWebhook(@RequestBody PagbankWebhookRequest pagbankWebhookRequest) {
 
         logger.info("m=recebeConfirmacaoDePagamentoWebhook, msg=Recebendo confirmação de status de pagamento do Pagbank, pagbankWebhookRequest={}", pagbankWebhookRequest);
 
@@ -88,6 +88,6 @@ public class PagamentoController {
 
         logger.info("m=recebeConfirmacaoDePagamentoWebhook, msg=Confirmação de pagamento recebido do Pagbank com sucesso, pagbankWebhookRequest={}", pagamentoAlterado);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(PagamentoResponseMapper.INSTANCE.mapFrom(pagamentoAlterado));
+        return ResponseEntity.status(HttpStatus.CREATED).body(PagamentoResponseMapper.INSTANCE.mapFrom(pagamento));
     }
 }

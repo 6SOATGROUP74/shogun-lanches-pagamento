@@ -4,12 +4,14 @@ import com.example.demo.core.domain.FormasPagamentoEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
 
+@Builder
 @Getter
 @Setter
 @ToString
