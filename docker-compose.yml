@@ -23,16 +23,16 @@ services:
 
   mysql:
     image: mysql:8.0.37-debian
-    container_name: mysql
+    container_name: mysql-pagamento
     ports:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: user_main
-      MYSQL_DATABASE: db_soat
+      MYSQL_DATABASE: db_soat_pagamento
       MYSQL_USER: user_main
       MYSQL_PASSWORD: user_main
     volumes:
-      - mysql-volume:/var/lib/mysql
+      - mysql-volume-pagamento:/var/lib/mysql
 #    healthcheck:
 #      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
 #      timeout: 1s
@@ -45,5 +45,5 @@ networks:
     driver: bridge
 
 volumes:
-  mysql-volume:
+  mysql-volume-pagamento:
     driver: local

@@ -1,7 +1,7 @@
 package com.example.demo.adapter.controller.request.pagamento.mapper;
 
 import com.example.demo.adapter.controller.request.pagamento.PagamentoRequest;
-import com.example.demo.adapter.controller.request.pagamento.PagamentoResponse;
+import com.example.demo.adapter.controller.response.pagamento.PagamentoResponse;
 import com.example.demo.adapter.controller.request.pagamento.PagamentoStatusResponse;
 import com.example.demo.core.domain.Pagamento;
 import com.example.demo.infrastructure.integration.pagbank.request.PagbankWebhookRequest;
