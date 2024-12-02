@@ -33,27 +33,27 @@ spec:
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: app-opaque
+                  name: app-pagamento-opaque
                   key: DB_PASSWORD
           readinessProbe:
             httpGet:
               path: actuator/health/readiness
-              port: 8080
+              port: 8091
             initialDelaySeconds: 30
             periodSeconds: 10
           livenessProbe:
             httpGet:
               path: actuator/health/liveness
-              port: 8080
+              port: 8091
             initialDelaySeconds: 30
             periodSeconds: 60
           startupProbe:
             httpGet:
               path: actuator/health
-              port: 8080
+              port: 8091
             initialDelaySeconds: 30
             failureThreshold: 30
             periodSeconds: 10
           resources:
             requests:
-              cpu: 200m
+              cpu: 500m

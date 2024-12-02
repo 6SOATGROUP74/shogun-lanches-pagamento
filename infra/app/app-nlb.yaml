@@ -6,7 +6,7 @@ spec:
   type: LoadBalancer
   ports:
     - port: 80
-      targetPort: 8080
-      nodePort: 30010
+      targetPort: 8091
+      nodePort: 30012
   selector:
     app: app-pagamento-pod
