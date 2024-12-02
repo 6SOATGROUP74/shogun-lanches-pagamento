@@ -84,8 +84,8 @@ public abstract class PagamentoHelper {
         return pagamentoResponse;
     }
 
-    public static PagbankStatusPagamentoResponse gerarPagbankStatusPagamentoResponse() {
-        List<Pagamento> pagamentoList = Arrays.asList(new Pagamento("TESTE", "ORDER_12345", StatusPagamento.APROVADO.name(), new Total(1000L), LocalDateTime.now().plusDays(10L).toString()));
+    public static PagbankStatusPagamentoResponse gerarPagbankStatusPagamentoResponse(String status) {
+        List<Pagamento> pagamentoList = Arrays.asList(new Pagamento("TESTE", "ORDER_12345", status, new Total(1000L), LocalDateTime.now().plusDays(10L).toString()));
 
         PagbankStatusPagamentoResponse pagbankStatusPagamentoResponse = PagbankStatusPagamentoResponse.builder().pagamentos(pagamentoList).build();
 

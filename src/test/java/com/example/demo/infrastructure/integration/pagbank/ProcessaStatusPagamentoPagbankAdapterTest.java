@@ -39,7 +39,7 @@ class ProcessaStatusPagamentoPagbankAdapterTest {
                 .copiaCola("testeCopiaCola")
                 .qrCodeLink("testeQrCodeLink")
                 .build();
-        PagbankStatusPagamentoResponse pagbankStatusPagamentoResponse = gerarPagbankStatusPagamentoResponse();
+        PagbankStatusPagamentoResponse pagbankStatusPagamentoResponse = gerarPagbankStatusPagamentoResponse("PAID");
         ResponseEntity<PagbankStatusPagamentoResponse> pagbankPagamentoResponseResponseEntity = new ResponseEntity(pagbankStatusPagamentoResponse, HttpStatus.OK);
 
         when(pagbankClient.consultaStatusPagamento(any(), any())).thenReturn(pagbankPagamentoResponseResponseEntity);
@@ -48,4 +48,29 @@ class ProcessaStatusPagamentoPagbankAdapterTest {
 
         verify(pagbankClient, times(1)).consultaStatusPagamento(any(), any());
     }
+
+    @Test
+    public void naoDeveProcessarPagamento(){
+        Pagamento pagamento = PagamentoMockBuilder.builder()
+                .idPagamento(1L)
+                .numeroPedido(1L)
+                .statusDoPagamento(StatusPagamento.PENDENTE.name())
+                .valorTotal(BigDecimal.valueOf(100))
+                .tipoDoPamento("QRCODE_PAGBANK")
+                .dataPagamento(LocalDateTime.now().toString())
+                .codPagamento("ORDER_123")
+                .copiaCola("testeCopiaCola")
+                .qrCodeLink("testeQrCodeLink")
+                .build();
+        PagbankStatusPagamentoResponse pagbankStatusPagamentoResponse = gerarPagbankStatusPagamentoResponse("PENDING");
+        ResponseEntity<PagbankStatusPagamentoResponse> pagbankPagamentoResponseResponseEntity = new ResponseEntity(pagbankStatusPagamentoResponse, HttpStatus.OK);
+
+        when(pagbankClient.consultaStatusPagamento(any(), any())).thenReturn(pagbankPagamentoResponseResponseEntity);
+
+        processaStatusPagamentoPagbankAdapter.execute(pagamento);
+
+        verify(pagbankClient, times(1)).consultaStatusPagamento(any(), any());
+    }
+
+
 }
