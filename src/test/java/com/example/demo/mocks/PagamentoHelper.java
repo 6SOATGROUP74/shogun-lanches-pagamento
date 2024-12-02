@@ -73,7 +73,7 @@ public abstract class PagamentoHelper {
     }
 
     public static PagbankPagamentoResponse gerarPagbankPagamentoResponse() {
-        PagbankPagamentoResponse pagamentoResponse = new PagbankPagamentoResponse(
+        return new PagbankPagamentoResponse(
                 "TESTE",
                 LocalDateTime.now().toString(),
                 "ORDER_12345",
@@ -81,7 +81,6 @@ public abstract class PagamentoHelper {
                 List.of(new Produto("Ordem de pedido Shogun Lanches", 1L, 1000L)),
                 List.of(new QrCodeResponse("testeQrCode", LocalDateTime.now().plusDays(10L).toString(), new Total(1000L), "copiaCola", List.of(new LinkQRCode("linkdoQRCode"))))
         );
-        return pagamentoResponse;
     }
 
     public static PagbankStatusPagamentoResponse gerarPagbankStatusPagamentoResponse(String status) {
