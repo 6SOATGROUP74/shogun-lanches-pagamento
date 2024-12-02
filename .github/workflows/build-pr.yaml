@@ -92,5 +92,3 @@ jobs:
         base: main
         title: 'PR : Aberto via actions'
         body: 'Bora Brasil !!!.'
-
->>>>>>> Stashed changes
