@@ -6,7 +6,4 @@ public class PagamentoNotFoundException extends RuntimeException {
         super(message);
     }
 
-    public PagamentoNotFoundException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

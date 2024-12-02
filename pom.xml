@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.example</groupId>
     <artifactId>shogun-lanches-pagamento</artifactId>
-    <name>tech-challenge-6soat</name>
+    <name>shogun-lanches-pagamento</name>
     <version>1</version>
     <description>Demo project for Spring Boot</description>
 
@@ -334,24 +334,7 @@
                         <goals>
                             <goal>report</goal>
                         </goals>
-                        <configuration>
-                            <excludes>
-                                <exclude>com/example/demo/core/domain/*</exclude>
-                                <exclude>com/example/demo/adapter/controller/CustomExceptionHandlers.class</exclude>
-                                <exclude>com/example/demo/adapter/controller/response/**</exclude>
-                                <exclude>com/example/demo/adapter/controller/request/**</exclude>
-                                <exclude>com/example/demo/config/*</exclude>
-                                <exclude>com/example/demo/infrastructure/integration/pagbank/request/*</exclude>
-                                <exclude>com/example/demo/infrastructure/integration/pagbank/response/*</exclude>
-                                <exclude>com/example/demo/infrastructure/integration/pagbank/presenter/*</exclude>
 
-                                <exclude>com/example/demo/adapter/presenter/**</exclude>
-                                <exclude>com/example/demo/exceptions/*</exclude>
-                                <exclude>com/example/demo/infrastructure/repository/entity/*</exclude>
-                                <exclude>com/example/demo/infrastructure/repository/presenter/*</exclude>
-
-                            </excludes>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>

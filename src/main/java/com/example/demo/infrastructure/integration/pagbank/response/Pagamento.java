@@ -12,7 +12,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @AllArgsConstructor
-@ToString
 public class Pagamento {
 
     @JsonProperty("id")

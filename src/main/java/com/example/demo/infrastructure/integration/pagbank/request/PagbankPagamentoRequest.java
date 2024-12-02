@@ -11,11 +11,9 @@ import lombok.ToString;
 
 import java.util.List;
 
-@Builder
 @Getter
 @Setter
 @AllArgsConstructor
-@ToString
 public class PagbankPagamentoRequest {
 
     @JsonProperty("reference_id")

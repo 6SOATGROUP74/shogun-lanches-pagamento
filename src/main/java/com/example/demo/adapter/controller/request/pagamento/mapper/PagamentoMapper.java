@@ -1,8 +1,6 @@
 package com.example.demo.adapter.controller.request.pagamento.mapper;
 
 import com.example.demo.adapter.controller.request.pagamento.PagamentoRequest;
-import com.example.demo.adapter.controller.response.pagamento.PagamentoResponse;
-import com.example.demo.adapter.controller.request.pagamento.PagamentoStatusResponse;
 import com.example.demo.core.domain.Pagamento;
 import com.example.demo.infrastructure.integration.pagbank.request.PagbankWebhookRequest;
 import org.mapstruct.Mapper;
@@ -24,21 +22,6 @@ public interface PagamentoMapper {
     Pagamento mapFrom(PagbankWebhookRequest pagbankWebhookRequest);
 
     Pagamento mapFrom(PagamentoRequest pagamentoRequest);
-
-    @Mapping(target = "statusDoPagamento", source = "statusDoPagamento")
-    @Mapping(target = "valorTotal", source = "valorTotal")
-    @Mapping(target = "tipoDoPagamento", source = "tipoDoPagamento")
-    @Mapping(target = "dataPagamento", source = "dataPagamento")
-    @Mapping(target = "codPagamento", source = "codPagamento")
-    @Mapping(target = "idPagamento", source = "idPagamento")
-    @Mapping(target = "copiaCola", source = "copiaCola")
-    @Mapping(target = "qrCodeLink", source = "qrCodeLink")
-    PagamentoResponse mapFrom(Pagamento pagamento);
-
-    @Mapping(target = "statusDoPagamento", source = "statusDoPagamento")
-    @Mapping(target = "valorTotal", source = "valorTotal")
-    @Mapping(target = "codPagamento", source = "codPagamento")
-    PagamentoStatusResponse mapConvertFrom(Pagamento pagamento);
 
     @Named("converteParaBigDecimal")
     default BigDecimal converteParaBigDecimal(Long valor) {
