@@ -69,11 +69,11 @@ jobs:
           -Dsonar.qualitygate.wait=true \
           -Dsonar.sources=src/main \
           -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
-          -Dsonar.branch.name=${GITHUB_REFrefs/heads/} \
+          -Dsonar.branch.name=${GITHUB_REF#refs/heads/} \
           -Dsonar.branch.target=main
 
   publish-docker-hub:
-    needs: [test, build]
+    needs: [test, build, sornarcloud]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code

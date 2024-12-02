@@ -67,7 +67,7 @@ jobs:
           -Dsonar.qualitygate.wait=true \
           -Dsonar.sources=src/main \
           -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
-          -Dsonar.branch.name=${GITHUB_REFrefs/heads/} \
+          -Dsonar.branch.name=${GITHUB_REF#refs/heads/} \
           -Dsonar.branch.target=main
 
   create-pr:
