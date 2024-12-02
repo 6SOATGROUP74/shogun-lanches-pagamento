@@ -73,7 +73,7 @@ jobs:
           -Dsonar.branch.target=main
 
   publish-docker-hub:
-    needs: [test, build, sornarcloud]
+    needs: [test, build, sonarcloud]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
