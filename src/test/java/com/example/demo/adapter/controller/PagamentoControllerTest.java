@@ -6,6 +6,7 @@ import com.example.demo.core.domain.Pagamento;
 import com.example.demo.core.usecase.interfaces.pagamento.AlterarStatusPagamentoUseCasePort;
 import com.example.demo.core.usecase.interfaces.pagamento.PagarPedidoUseCasePort;
 import com.example.demo.core.usecase.interfaces.pagamento.ValidarPagamentoPedidoUseCasePort;
+import com.example.demo.exceptions.PagamentoNotFoundException;
 import com.example.demo.infrastructure.integration.pagbank.request.PagbankWebhookRequest;
 import static com.example.demo.mocks.PagamentoHelper.gerarPagamentoRequest;
 import static com.example.demo.mocks.PagamentoHelper.gerarPagbankWebhookRequest;
@@ -27,6 +28,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -83,6 +85,20 @@ class PagamentoControllerTest {
     }
 
     @Test
+    void naoDeveRealizarPagamento() throws Exception {
+        var pagamentoRequest = gerarPagamentoRequest();
+        when(pagarPedidoUseCasePort.checkout(any())).thenThrow(PagamentoNotFoundException.class);
+
+        mockMvc.perform(post("/v1/pagamento")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(pagamentoRequest)))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+
+        verify(pagarPedidoUseCasePort, times(1)).checkout(any(Pagamento.class));
+    }
+
+    @Test
     void deveConsultarStatusDoPagamento() throws Exception {
         Long pagamentoId = 20L;
         Pagamento pagamento = pagamentoPendente(pagamentoId);
@@ -93,6 +109,20 @@ class PagamentoControllerTest {
                 )
                 .andDo(print())
                 .andExpect(status().isOk());
+
+        verify(buscarPagamentoAdapterPort, times(1)).buscar(any());
+    }
+
+    @Test
+    void deveLancarExcessaoAoConsultarStatusDoPagamento() throws Exception {
+        Long pagamentoId = 20L;
+        when(buscarPagamentoAdapterPort.buscar(pagamentoId)).thenThrow(PagamentoNotFoundException.class);
+
+        mockMvc.perform(get("/v1/pagamento/{pagamentoId}", pagamentoId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isNotFound());
 
         verify(buscarPagamentoAdapterPort, times(1)).buscar(any());
     }
