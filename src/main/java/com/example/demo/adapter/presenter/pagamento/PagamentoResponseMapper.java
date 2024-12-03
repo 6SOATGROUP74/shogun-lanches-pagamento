@@ -9,5 +9,6 @@ import org.mapstruct.factory.Mappers;
 public interface PagamentoResponseMapper {
     PagamentoResponseMapper INSTANCE = Mappers.getMapper(PagamentoResponseMapper.class);
 
+
     PagamentoResponse mapFrom(Pagamento pagamento);
 }
