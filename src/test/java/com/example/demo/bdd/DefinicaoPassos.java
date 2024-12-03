@@ -15,7 +15,7 @@ public class DefinicaoPassos {
 
     private Response response;
 
-    private String ENDPOINT_PAGAMENTO = "http://localhost:8091/v1/pagamento";
+    private String ENDPOINT_PAGAMENTO = "http://a1d23f03f33f94f51995976dfdfc8be4-990202056.us-east-1.elb.amazonaws.com/v1/pagamento";
 
     @Quando("receber uma solicitação de pagamento")
     public void um_recebimento_de_uma_solicitação_de_pagamento() {
