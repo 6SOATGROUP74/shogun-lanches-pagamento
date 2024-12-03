@@ -262,12 +262,12 @@
                 <version>3.1.2</version>
                 <configuration>
                     <includes>
-                        <include>**/*IT.java</include>
-                        <include>**/*Test.java</include>
+                        <include>/*IT.java</include>
+                        <include>/*Test.java</include>
                     </includes>
                     <excludes>
                         <!-- Excluir todos os testes localizados no diretório bdd -->
-                        <exclude>**/bdd/**</exclude>
+                        <exclude>/bdd/</exclude>
                     </excludes>
                 </configuration>
             </plugin>
